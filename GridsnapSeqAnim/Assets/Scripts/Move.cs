@@ -186,9 +186,9 @@ public class Move : MonoBehaviour
 
     private void LogMovement()
     {
-        int ticks = AnimationSequence.Instance.ticks;
-        movementLogs.Add(ticks + "," + hor + "," + ver + "," + fwd + "," + pit + "," + yaw
-             + "," + roll + "," + stop);
+        //int ticks = AnimationSequence.Instance.ticks;
+        //movementLogs.Add(ticks + "," + hor + "," + ver + "," + fwd + "," + pit + "," + yaw
+        //     + "," + roll + "," + stop);
     }
 
     public void ReleaseControl()

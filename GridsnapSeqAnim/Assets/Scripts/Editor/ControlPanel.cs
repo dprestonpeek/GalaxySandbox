@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-using MidiPlayerTK;
+//using MidiPlayerTK;
 
 //[ExecuteAlways]
 public class ControlPanel : EditorWindow
 {
     public Rect windowRect = new Rect(20, 20, 120, 50);
-    static MidiFilePlayer midiPlayer;
+    //static MidiFilePlayer midiPlayer;
     static AudioSource audioPlayer;
     static int ticks = 0;
 
@@ -129,17 +129,17 @@ public class ControlPanel : EditorWindow
     //    #endregion
     //}
 
-    static MidiFilePlayer GetMidiPlayer(MidiFilePlayer nullCheck)
-    {
-        if (!nullCheck)
-        {
-            return FindObjectOfType<MidiFilePlayer>();
-        }
-        else
-        {
-            return nullCheck;
-        }
-    }
+    //static MidiFilePlayer GetMidiPlayer(MidiFilePlayer nullCheck)
+    //{
+    //    if (!nullCheck)
+    //    {
+    //        return FindObjectOfType<MidiFilePlayer>();
+    //    }
+    //    else
+    //    {
+    //        return nullCheck;
+    //    }
+    //}
 
     static AudioSource GetAudioPlayer(AudioSource nullCheck)
     {

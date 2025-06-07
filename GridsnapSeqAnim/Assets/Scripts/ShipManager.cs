@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class ShipManager : MonoBehaviour
 {
-    public enum Ships { Luminaris, F3, SF }
-    [SerializeField]
-    public Ships ship = Ships.Luminaris;
-
     [SerializeField]
     public int position;
 
@@ -28,35 +24,35 @@ public class ShipManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (shipObj == null)
-        {
-            if (!GetShip())
-            {
-                SpawnShip();
-            }
-        }
-        if (ship != shipInfo.shipType)
-        {
-            Destroy(shipObj);
-            SpawnShip();
-        }
+        //if (shipObj == null)
+        //{
+        //    if (!GetShip())
+        //    {
+        //        SpawnShip();
+        //    }
+        //}
+        //if (ship != shipInfo.shipType)
+        //{
+        //    Destroy(shipObj);
+        //    SpawnShip();
+        //}
 
     }
 
-    void SpawnShip()
-    {
-        shipObj = Instantiate(shipObjs[(int)ship], shipHolder.transform);
-        shipInfo = shipObj.GetComponent<Ship>();
-    }
+    //void SpawnShip()
+    //{
+    //    shipObj = Instantiate(shipObjs[(int)ship], shipHolder.transform);
+    //    shipInfo = shipObj.GetComponent<Ship>();
+    //}
 
-    bool GetShip()
-    {
-        shipInfo = GetComponentInChildren<Ship>();
-        if (shipInfo)
-        {
-            shipObj = shipInfo.gameObject;
-            return true;
-        }
-        return false;
-    }
+    //bool GetShip()
+    //{
+    //    shipInfo = GetComponentInChildren<Ship>();
+    //    if (shipInfo)
+    //    {
+    //        shipObj = shipInfo.gameObject;
+    //        return true;
+    //    }
+    //    return false;
+    //}
 }

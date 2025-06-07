@@ -64,47 +64,47 @@ public class CameraManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (AnimationSequence.Instance.animate && !animInitialized)
-        {
-            return;
-        }
-        if (animJustInit && AnimationSequence.Instance.animate)
-        {
-            switch (AnimationSequence.Instance.currSection)
-            {
-                case AnimationSequence.LoadedSection.FullSong:
-                    ControlPanelFuncs.Luminaris1LLD();
-                    break;
-                case AnimationSequence.LoadedSection.Intro:
-                    ControlPanelFuncs.PlanetGChase();
-                    break;
-                case AnimationSequence.LoadedSection.Explosion:
-                    ControlPanelFuncs.Luminaris2FP();
-                    break;
-            }
-            animJustInit = false;
-        }
-        if ((!targetObj || target != currTarget) && !targetDirty)
-        {
-            targetDirty = true;
-        }
-        if ((!angleObj || angle != currAngle) && !angleDirty)
-        {
-            angleDirty = true;
-        }
-        if (targetDirty)
-        {
-            UpdateTarget();
-        }
-        if (angleDirty)
-        {
-            UpdateAngle();
-        }
-        if (Input.GetButtonDown("CameraSwap"))
-        {
-            CameraSwap();
-        }
-        DoSpecialActions();
+        //if (AnimationSequence.Instance.animate && !animInitialized)
+        //{
+        //    return;
+        //}
+        //if (animJustInit && AnimationSequence.Instance.animate)
+        //{
+        //    switch (AnimationSequence.Instance.currSection)
+        //    {
+        //        case AnimationSequence.LoadedSection.FullSong:
+        //            ControlPanelFuncs.Luminaris1LLD();
+        //            break;
+        //        case AnimationSequence.LoadedSection.Intro:
+        //            ControlPanelFuncs.PlanetGChase();
+        //            break;
+        //        case AnimationSequence.LoadedSection.Explosion:
+        //            ControlPanelFuncs.Luminaris2FP();
+        //            break;
+        //    }
+        //    animJustInit = false;
+        //}
+        //if ((!targetObj || target != currTarget) && !targetDirty)
+        //{
+        //    targetDirty = true;
+        //}
+        //if ((!angleObj || angle != currAngle) && !angleDirty)
+        //{
+        //    angleDirty = true;
+        //}
+        //if (targetDirty)
+        //{
+        //    UpdateTarget();
+        //}
+        //if (angleDirty)
+        //{
+        //    UpdateAngle();
+        //}
+        //if (Input.GetButtonDown("CameraSwap"))
+        //{
+        //    CameraSwap();
+        //}
+        //DoSpecialActions();
     }
 
     void CameraSwap()
