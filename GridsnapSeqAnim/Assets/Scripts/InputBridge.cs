@@ -65,6 +65,7 @@ public class InputBridge : MonoBehaviour
         GetAim();
         GetShoot();
         GetTarget();
+        GetPause();
     }
 
     private void GetForwardThrust()
@@ -211,7 +212,7 @@ public class InputBridge : MonoBehaviour
         }
     }
 
-    private float GetPause()
+    private void GetPause()
     {
         if (gamepad)
         {
@@ -219,7 +220,7 @@ public class InputBridge : MonoBehaviour
         }
         if (mouseKeyboard)
         {
-            pause = theKeyboard.escapeKey.isPressed;
+            pause = theKeyboard.escapeKey.wasPressedThisFrame;
         }
     }
 
