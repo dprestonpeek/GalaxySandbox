@@ -8,7 +8,7 @@ public class Ship : MonoBehaviour
     public GameManager.Ships shipType = GameManager.Ships.Luminaris;
 
     [SerializeField]
-    Rigidbody rb;
+    public Rigidbody rb;
 
     public float forwardMultiplier     = 1.0f;
     public float sideMultiplier        = 1.0f;

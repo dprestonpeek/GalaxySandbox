@@ -38,6 +38,12 @@ public class MenuController : MonoBehaviour
     [SerializeField]
     TMP_InputField tBrake;
 
+    [SerializeField]
+    TMP_Text linearVelocity;
+
+    [SerializeField]
+    TMP_Text angularVelocity;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -75,6 +81,8 @@ public class MenuController : MonoBehaviour
                 menu.SetActive(true);
             }
         }
+        linearVelocity.text = ship.rb.velocity.ToString();
+        angularVelocity.text = ship.rb.angularVelocity.ToString();
     }
 
     public void UpdateFwd()
