@@ -14,10 +14,4 @@ public class Luminaris : Ship
         fBrakeMultiplier = 5f;
         boostMultiplier = 5f;
     }
-
-    // Update is called once per frame
-    public override void Update()
-    {
-        base.Update();
-    }
 }

@@ -59,9 +59,9 @@ public class MenuController : MonoBehaviour
         spin.text = ship.spinMultiplier.ToString();
         ship.flipMultiplier = PlayerPrefs.GetFloat("flip", 10);
         flip.text = ship.flipMultiplier.ToString();
-        ship.fBrakeMultiplier = PlayerPrefs.GetFloat("fbrake", .1f);
+        ship.fBrakeMultiplier = PlayerPrefs.GetFloat("fBrake", .1f);
         fBrake.text = ship.fBrakeMultiplier.ToString();
-        ship.tBrakeMultiplier = PlayerPrefs.GetFloat("tbrake", .1f);
+        ship.tBrakeMultiplier = PlayerPrefs.GetFloat("tBrake", .1f);
         tBrake.text = ship.tBrakeMultiplier.ToString();
         ship.boostMultiplier = PlayerPrefs.GetFloat("boost", 5);
         boost.text = ship.boostMultiplier.ToString();

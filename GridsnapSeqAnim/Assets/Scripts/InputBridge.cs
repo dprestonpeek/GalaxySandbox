@@ -21,6 +21,7 @@ public class InputBridge : MonoBehaviour
     public static bool aim;
     public static bool shoot;
     public static bool target;
+    public static bool freelook;
     public static bool pause;
 
     private Gamepad theGamepad;
@@ -65,6 +66,7 @@ public class InputBridge : MonoBehaviour
         GetAim();
         GetShoot();
         GetTarget();
+        GetToggleFreeLook();
         GetPause();
     }
 
@@ -172,7 +174,7 @@ public class InputBridge : MonoBehaviour
         }
         if (mouseKeyboard)
         {
-            torqueBrake = theKeyboard.zKey.isPressed;
+            torqueBrake = theKeyboard.xKey.isPressed;
         }
     }
 
@@ -209,6 +211,18 @@ public class InputBridge : MonoBehaviour
         if (mouseKeyboard)
         {
             target = theKeyboard.tKey.isPressed;
+        }
+    }
+
+    private void GetToggleFreeLook()
+    {
+        if (gamepad)
+        {
+
+        }
+        if (mouseKeyboard)
+        {
+            freelook = theKeyboard.zKey.wasPressedThisFrame;
         }
     }
 

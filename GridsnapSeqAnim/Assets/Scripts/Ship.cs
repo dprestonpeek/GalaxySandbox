@@ -29,7 +29,7 @@ public class Ship : MonoBehaviour
     }
 
     // Update is called once per frame
-    public virtual void Update()
+    public virtual void FixedUpdate()
     {
         angVel = rb.angularVelocity;
         if (InputBridge.forceBrake)
@@ -43,6 +43,11 @@ public class Ship : MonoBehaviour
         if (InputBridge.forceBrake || InputBridge.torqueBrake)
         {
             return;
+        }
+
+        if (InputBridge.freelook)
+        {
+            
         }
 
         rb.AddRelativeForce(new Vector3(CalculateForwardThrust(InputBridge.forwardThrust, InputBridge.boost), 0));
@@ -85,6 +90,10 @@ public class Ship : MonoBehaviour
 
     public virtual float CalculateRollTorque(float _rollTorque)
     {
+        if (Mathf.Abs(_rollTorque) == 0) 
+        {
+            rb.angularVelocity = new Vector3(DecreaseUntilZero(rb.angularVelocity.x, 0, .005f ), rb.angularVelocity.y, rb.angularVelocity.z);
+        }
         return (_rollTorque * rollMultiplier);
     }
 
@@ -122,12 +131,12 @@ public class Ship : MonoBehaviour
 
     public virtual void ApplyFBrakes(float _calculatedBrakeForce)
     {
-        rb.velocity = new Vector3(DecreaseUntilZero(rb.velocity.x, .05f, .1f), DecreaseUntilZero(rb.velocity.y, .05f, .1f), DecreaseUntilZero(rb.velocity.z, .05f, .1f));
+        rb.velocity = new Vector3(DecreaseUntilZero(rb.velocity.x, 0, fBrakeMultiplier), DecreaseUntilZero(rb.velocity.y, 0, fBrakeMultiplier), DecreaseUntilZero(rb.velocity.z, 0, fBrakeMultiplier));
     }
 
     public virtual void ApplyTBrakes(float _calculatedBrakeForce)
     {
-        rb.angularVelocity = new Vector3(DecreaseUntilZero(rb.angularVelocity.x, .05f, .001f), DecreaseUntilZero(rb.angularVelocity.y, .05f, .001f), DecreaseUntilZero(rb.angularVelocity.z, .05f, .001f));
+        rb.angularVelocity = new Vector3(DecreaseUntilZero(rb.angularVelocity.x, 0, tBrakeMultiplier), DecreaseUntilZero(rb.angularVelocity.y, 0, tBrakeMultiplier), DecreaseUntilZero(rb.angularVelocity.z, 0, tBrakeMultiplier));
     }
 
     // Determines whether a float is close enough to 0.
@@ -148,6 +157,10 @@ public class Ship : MonoBehaviour
         {
             tolerance *= -1;
             increment *= -1;
+        }
+        else if (value == 0)
+        {
+            return value;
         }
 
         // is the value still above the tolerance?
