@@ -10,6 +10,9 @@ public class Ship : MonoBehaviour
     [SerializeField]
     public Rigidbody rb;
 
+    [SerializeField]
+    MenuController menu;
+
     public float forwardMultiplier     = 1.0f;
     public float sideMultiplier        = 1.0f;
     public float upMultiplier          = 1.0f;
@@ -19,6 +22,8 @@ public class Ship : MonoBehaviour
     public float fBrakeMultiplier      = 1.0f;
     public float tBrakeMultiplier      = 1.0f;
     public float boostMultiplier       = 1.0f;
+
+    public bool freeLook = false;
 
     public Vector3 angVel;
 
@@ -47,15 +52,28 @@ public class Ship : MonoBehaviour
 
         if (InputBridge.freelook)
         {
-            
+            if (freeLook)
+            {
+                freeLook = false;
+                menu.ToggleFreeLook(false);
+            }
+            else
+            {
+                freeLook = true;
+                menu.ToggleFreeLook(true);
+            }
+
         }
 
         rb.AddRelativeForce(new Vector3(CalculateForwardThrust(InputBridge.forwardThrust, InputBridge.boost), 0));
         rb.AddRelativeForce(new Vector3(0, 0, CalculateSideThrust(InputBridge.sideThrust, InputBridge.boost)));
         rb.AddRelativeForce(new Vector3(0, CalculateUpThrust(InputBridge.upThrust, InputBridge.boost)));
         rb.AddRelativeTorque(new Vector3(CalculateRollTorque(InputBridge.rollTorque), 0));
-        rb.AddRelativeTorque(new Vector3(0, CalculateSpinTorque(InputBridge.spinTorque)));
-        rb.AddRelativeTorque(new Vector3(0, 0, CalculateFlipTorque(InputBridge.flipTorque)));
+        if (freeLook)
+        {
+            rb.AddRelativeTorque(new Vector3(0, CalculateSpinTorque(InputBridge.spinTorque)));
+            rb.AddRelativeTorque(new Vector3(0, 0, CalculateFlipTorque(InputBridge.flipTorque)));
+        }
     }
 
     public virtual float CalculateForwardThrust(float _forwardThrust, float _boost)
@@ -111,7 +129,7 @@ public class Ship : MonoBehaviour
     {
         if (_fBrakeOn)
         {
-            return fBrakeMultiplier * -1;
+            return fBrakeMultiplier;
         }
         return 0;
     }
@@ -120,23 +138,49 @@ public class Ship : MonoBehaviour
     {
         if (_tBrakeOn)
         {
-            return tBrakeMultiplier * -1;
+            return tBrakeMultiplier;
         }
         else if (Mathf.Abs(rb.angularVelocity.x) < .5f)
         {
-            rb.angularVelocity = new Vector3(DecreaseUntilZero(rb.angularVelocity.x, 0, .005f), DecreaseUntilZero(rb.angularVelocity.y, 0, .005f), DecreaseUntilZero(rb.angularVelocity.z, 0, .005f ));
+            rb.angularVelocity = new Vector3(DecreaseUntilZero(rb.angularVelocity.x, .1f, tBrakeMultiplier), rb.angularVelocity.y, rb.angularVelocity.z);
         }
         return 0;
     }
 
     public virtual void ApplyFBrakes(float _calculatedBrakeForce)
     {
-        rb.velocity = new Vector3(DecreaseUntilZero(rb.velocity.x, 0, fBrakeMultiplier), DecreaseUntilZero(rb.velocity.y, 0, fBrakeMultiplier), DecreaseUntilZero(rb.velocity.z, 0, fBrakeMultiplier));
+        float x = 0, y = 0, z = 0;
+        if (Mathf.Abs(rb.velocity.x) > 0)
+        {
+            x = DecreaseUntilZero(rb.velocity.x, .1f, fBrakeMultiplier);
+        }
+        if (Mathf.Abs(rb.velocity.y) > 0)
+        {
+            y = DecreaseUntilZero(rb.velocity.y, .1f, fBrakeMultiplier);
+        }
+        if (Mathf.Abs(rb.velocity.z) > 0)
+        {
+            z = DecreaseUntilZero(rb.velocity.z, .1f, fBrakeMultiplier);
+        }
+        rb.velocity = new Vector3(x, y, z);
     }
 
     public virtual void ApplyTBrakes(float _calculatedBrakeForce)
     {
-        rb.angularVelocity = new Vector3(DecreaseUntilZero(rb.angularVelocity.x, 0, tBrakeMultiplier), DecreaseUntilZero(rb.angularVelocity.y, 0, tBrakeMultiplier), DecreaseUntilZero(rb.angularVelocity.z, 0, tBrakeMultiplier));
+        float x = 0, y = 0, z = 0;
+        if (Mathf.Abs(rb.angularVelocity.x) > 0)
+        {
+            x = DecreaseUntilZero(rb.angularVelocity.x, .1f, tBrakeMultiplier);
+        }
+        if (Mathf.Abs(rb.angularVelocity.y) > 0)
+        {
+            y = DecreaseUntilZero(rb.angularVelocity.y, .1f, tBrakeMultiplier);
+        }
+        if (Mathf.Abs(rb.angularVelocity.z) > 0)
+        {
+            z = DecreaseUntilZero(rb.angularVelocity.z, .1f, tBrakeMultiplier);
+        }
+        rb.angularVelocity = new Vector3(x, y, z);
     }
 
     // Determines whether a float is close enough to 0.
@@ -151,23 +195,27 @@ public class Ship : MonoBehaviour
 
     private float DecreaseUntilZero(float value, float tolerance, float increment)
     {
-        Debug.Log("Decrease until zero: value = " + value);
+        if (value == 0)
+        {
+            return value;
+        }
         // if value is negative, flip the operations
         if (value < 0)
         {
             tolerance *= -1;
             increment *= -1;
         }
-        else if (value == 0)
+        // increment must not be higher than tolerance
+        if (increment > tolerance)
         {
-            return value;
+            tolerance = increment;
         }
 
         // is the value still above the tolerance?
         if (Mathf.Abs(value) > tolerance)
         {
-            // is the next increment going to bring value below 0?
-            if (Mathf.Abs(value - tolerance) < 0)
+            // is the next increment going to bring value below the tolerance?
+            if (Mathf.Abs(value - increment) < tolerance)
             {
                 value = 0;
             }

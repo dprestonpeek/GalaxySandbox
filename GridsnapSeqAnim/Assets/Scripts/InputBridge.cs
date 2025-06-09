@@ -223,6 +223,10 @@ public class InputBridge : MonoBehaviour
         if (mouseKeyboard)
         {
             freelook = theKeyboard.zKey.wasPressedThisFrame;
+            if (freelook)
+            {
+                Debug.Log("Freelooking");
+            }
         }
     }
 

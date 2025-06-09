@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -44,6 +45,9 @@ public class MenuController : MonoBehaviour
     [SerializeField]
     TMP_Text angularVelocity;
 
+    [SerializeField]
+    TMP_Text freeLookEnabled;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -87,60 +91,130 @@ public class MenuController : MonoBehaviour
 
     public void UpdateFwd()
     {
-        ship.forwardMultiplier = float.Parse(fwd.text);
-        PlayerPrefs.SetFloat("fwd", ship.forwardMultiplier);
+        try
+        {
+            ship.forwardMultiplier = float.Parse(fwd.text);
+            PlayerPrefs.SetFloat("fwd", ship.forwardMultiplier);
+        }
+        catch(Exception ex)
+        {
+
+        }
     }
 
     public void UpdateSide()
     {
-        ship.sideMultiplier = float.Parse(side.text);
-        PlayerPrefs.SetFloat("side", ship.sideMultiplier);
+        try
+        {
+            ship.sideMultiplier = float.Parse(side.text);
+            PlayerPrefs.SetFloat("side", ship.sideMultiplier);
+        }
+        catch (Exception ex)
+        {
+
+        }
     }
 
     public void UpdateUp()
     {
-        ship.upMultiplier = float.Parse(up.text);
-        PlayerPrefs.SetFloat("up", ship.upMultiplier);
+        try
+        {
+            ship.upMultiplier = float.Parse(up.text);
+            PlayerPrefs.SetFloat("up", ship.upMultiplier);
+        }
+        catch (Exception ex)
+        {
+
+        }
     }
 
     public void UpdateRoll()
     {
-        ship.rollMultiplier = float.Parse(roll.text);
-        PlayerPrefs.SetFloat("roll", ship.rollMultiplier);
+        try
+        {
+            ship.rollMultiplier = float.Parse(roll.text);
+            PlayerPrefs.SetFloat("roll", ship.rollMultiplier);
+        }
+        catch (Exception ex)
+        {
+
+        }
     }
 
     public void UpdateSpin()
     {
-        ship.spinMultiplier = float.Parse(spin.text);
-        PlayerPrefs.SetFloat("spin", ship.spinMultiplier);
+        try
+        {
+            ship.spinMultiplier = float.Parse(spin.text);
+            PlayerPrefs.SetFloat("spin", ship.spinMultiplier);
+        }
+        catch (Exception ex)
+        {
+
+        }
     }
 
     public void UpdateFlip()
     {
-        ship.flipMultiplier = float.Parse(flip.text);
-        PlayerPrefs.SetFloat("flip", ship.flipMultiplier);
+        try
+        {
+            ship.flipMultiplier = float.Parse(flip.text);
+            PlayerPrefs.SetFloat("flip", ship.flipMultiplier);
+        }
+        catch (Exception ex)
+        {
+
+        }
     }
 
     public void UpdateFBrake()
     {
-        ship.fBrakeMultiplier = float.Parse(fBrake.text);
-        PlayerPrefs.SetFloat("fBrake", ship.fBrakeMultiplier);
+        try
+        {
+            ship.fBrakeMultiplier = float.Parse(fBrake.text);
+            PlayerPrefs.SetFloat("fBrake", ship.fBrakeMultiplier);
+        }
+        catch (Exception ex)
+        {
+
+        }
     }
 
     public void UpdateTBrake()
     {
-        ship.tBrakeMultiplier = float.Parse(tBrake.text);
-        PlayerPrefs.SetFloat("tBrake", ship.tBrakeMultiplier);
+        try
+        {
+            ship.tBrakeMultiplier = float.Parse(tBrake.text);
+            PlayerPrefs.SetFloat("tBrake", ship.tBrakeMultiplier);
+        }
+        catch (Exception ex)
+        {
+
+        }
     }
 
     public void UpdateBoost()
     {
-        ship.boostMultiplier = float.Parse(boost.text);
-        PlayerPrefs.SetFloat("boost", ship.boostMultiplier);
+        try
+        {
+            ship.boostMultiplier = float.Parse(boost.text);
+            PlayerPrefs.SetFloat("boost", ship.boostMultiplier);
+        }
+        catch (Exception ex)
+        {
+
+        }
     }
 
-    public void UpdateUI()
+    public void ToggleFreeLook(bool enable)
     {
-
+        if (enable)
+        {
+            freeLookEnabled.text = "on";
+        }
+        else
+        {
+            freeLookEnabled.text = "off";
+        }
     }
 }
